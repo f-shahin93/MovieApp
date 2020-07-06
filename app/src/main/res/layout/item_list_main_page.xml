@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv_item_list_main_page"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="12dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:layout_gravity="center_horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_item_list_main_page"
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_margin="1dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_name_item_list_main_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="2dp"
+                android:text="name_movie" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>
