@@ -117,7 +117,6 @@ public class MovieRepository {
 
         for (Movie movie : mRealm.where(Movie.class).findAll()) {
             if (movie.getImdbID().equals(imdbId)) {
-                //if (movie.getRuntime() != null && !movie.getRuntime().equals(""))
                     return movie;
             }
         }

@@ -7,18 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shahin.movieapp.R;
 import com.shahin.movieapp.databinding.ItemListMainPageBinding;
 import com.shahin.movieapp.model.SearchItem;
-import com.shahin.movieapp.view.DetailMovieFragment;
-import com.shahin.movieapp.view.MainActivity;
 import com.shahin.movieapp.view.SecondActivity;
-import com.shahin.movieapp.viewModel.MainViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

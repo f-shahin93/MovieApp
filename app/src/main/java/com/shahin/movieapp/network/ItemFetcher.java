@@ -27,14 +27,6 @@ public class ItemFetcher {
     private MutableLiveData<Movie> mMutableLDMovie = new MutableLiveData<>();
     private static final String TAG = "Movie";
 
-    /*
-     )۱لیست فیلم ها :
-    GET ->http://www.omdbapi.com/?apikey=3e974fca&s=batman
-     )۲جزئیات فیلم ها:
-    GET ->http://www.omdbapi.com/?apikey=3e974fca&i={imdbID}
-    example:
-    http://www.omdbapi.com/?apikey=3e974fca&i=tt0372784
-     */
     private ItemFetcher() {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
