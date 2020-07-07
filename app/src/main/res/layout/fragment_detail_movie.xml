@@ -16,7 +16,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".view.DetailMovieFragment">
+            tools:context=".view.DetailMovieFragment"
+            android:id="@+id/constraintL_detail_root">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -36,7 +37,8 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/ic_play_movie"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:id="@+id/iv_show_film_detail_movie"/>
 
             </RelativeLayout>
 
@@ -205,6 +207,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="lan"
+                        android:padding="5dp"
                         android:id="@+id/tv_language_detail_movie"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -300,7 +303,16 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_banner_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
 </layout>

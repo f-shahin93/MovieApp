@@ -23,6 +23,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_banner_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_main_activity"
                 android:layout_width="match_parent"

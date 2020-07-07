@@ -15,6 +15,7 @@ import com.shahin.movieapp.model.SearchItem;
 import com.shahin.movieapp.network.ItemFetcher;
 import com.shahin.movieapp.repository.MovieRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainViewModel extends AndroidViewModel {
@@ -30,18 +31,42 @@ public class MainViewModel extends AndroidViewModel {
         mMovieRepository = MovieRepository.getInstance(application);
     }
 
-    public LiveData<MoviesList> getMoviesList(){
+    public LiveData<MoviesList> getMoviesList() {
         mItemFetcher.getMoviesList();
         return mItemFetcher.getMutableLDMoviesList();
     }
 
-    public LiveData<Movie> getMovie(String imdbId){
+    public LiveData<Movie> getMovie(String imdbId) {
         mItemFetcher.getMovie(imdbId);
         return mItemFetcher.getMutableLDMovie();
     }
 
-    public void addListToDB(List<SearchItem> list){
+    public void addListToDB(List<SearchItem> list) {
         mMovieRepository.addMovieListToDB(list);
+    }
+
+    public void addMovieToDB(Movie movie) {
+        mMovieRepository.addMovieToDB(movie);
+    }
+
+    public List<SearchItem> getMoviesListFromDB() {
+        List<Movie> listMovie = mMovieRepository.getListFromDB();
+        if (listMovie.size() > 0) {
+            List<SearchItem> searchItemList = new ArrayList<>();
+            for (int i = 0; i < listMovie.size(); i++) {
+                SearchItem searchItem = new SearchItem(
+                        listMovie.get(i).getImdbID(), listMovie.get(i).getTitle(), listMovie.get(i).getYear(),
+                        listMovie.get(i).getPoster(), listMovie.get(i).getType());
+
+                searchItemList.add(searchItem);
+            }
+            return searchItemList;
+        }
+        return new ArrayList<>();
+    }
+
+    public Movie getMovieFromDB(String imdbId) {
+        return mMovieRepository.getMovieFromDB(imdbId);
     }
 
     public boolean isOnline(Context context) {

@@ -49,26 +49,7 @@ public class MovieRepository {
         if (!mRealm.isInTransaction())
             mRealm.beginTransaction();
 
-        if (!isExistMovie(movieParam.getImdbID())) {
-            Movie movie = mRealm.createObject(Movie.class, movieParam.getImdbID());
-            movie.setActors(movieParam.getActors());
-            movie.setAwards(movieParam.getAwards());
-            movie.setCountry(movieParam.getCountry());
-            movie.setDirector(movieParam.getDirector());
-            movie.setGenre(movieParam.getGenre());
-            movie.setImdbRating(movieParam.getImdbRating());
-            movie.setLanguage(movieParam.getLanguage());
-            movie.setMetascore(movieParam.getMetascore());
-            movie.setPlot(movieParam.getPlot());
-            movie.setPoster(movieParam.getPoster());
-            movie.setRuntime(movieParam.getRuntime());
-            movie.setTitle(movieParam.getTitle());
-            movie.setType(movieParam.getType());
-            movie.setWriter(movieParam.getWriter());
-            movie.setYear(movieParam.getYear());
-
-        } else if (!isExistCompleteMovie(movieParam.getRuntime())) {
-
+        if (!isExistCompleteMovie(movieParam.getRuntime())) {
             for (Movie movieComplete : mRealm.where(Movie.class).findAll()) {
 
                 if (movieComplete.getImdbID().equals(movieParam.getImdbID())) {
@@ -108,7 +89,7 @@ public class MovieRepository {
             mRealm.beginTransaction();
 
         for (Movie movie : mRealm.where(Movie.class).findAll()) {
-            if (movie.getRuntime().equals(runTimeParam)) {
+            if (movie.getRuntime() != null && movie.getRuntime().equals(runTimeParam)) {
                 return true;
             }
         }
@@ -128,6 +109,23 @@ public class MovieRepository {
             mRealm.commitTransaction();
 
         return movieList;
+    }
+
+    public Movie getMovieFromDB(String imdbId) {
+        if (!mRealm.isInTransaction())
+            mRealm.beginTransaction();
+
+        for (Movie movie : mRealm.where(Movie.class).findAll()) {
+            if (movie.getImdbID().equals(imdbId)) {
+                //if (movie.getRuntime() != null && !movie.getRuntime().equals(""))
+                    return movie;
+            }
+        }
+
+        if (mRealm.isInTransaction())
+            mRealm.commitTransaction();
+
+        return null;
     }
 
 

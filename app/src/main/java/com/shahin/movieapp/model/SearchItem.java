@@ -38,4 +38,16 @@ public class SearchItem{
 	public String getTitle(){
 		return title;
 	}
+
+	public SearchItem(String imdbID,String title,String year,String poster,String type){
+		this.imdbID = imdbID;
+		this.title = title;
+		this.poster = poster;
+		this.type = type;
+		this.year = year;
+	}
+
+	public SearchItem(){
+
+	}
 }
