@@ -31,9 +31,13 @@ public class MainViewModel extends AndroidViewModel {
         mMovieRepository = MovieRepository.getInstance(application);
     }
 
-    public LiveData<MoviesList> getMoviesList() {
-        mItemFetcher.getMoviesList();
+    public LiveData<MoviesList> getLDMoviesList() {
+        //mItemFetcher.getMoviesList();
         return mItemFetcher.getMutableLDMoviesList();
+    }
+
+    public void getMoviesList() {
+        mItemFetcher.getMoviesList();
     }
 
     public LiveData<Movie> getMovie(String imdbId) {

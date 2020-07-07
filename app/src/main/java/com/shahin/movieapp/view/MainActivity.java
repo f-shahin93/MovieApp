@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         if (mMainViewModel.isOnline(this)) {
-            mMainViewModel.getMoviesList().observe(this, moviesList -> {
+            mMainViewModel.getLDMoviesList().observe(this, moviesList -> {
                 setupAdapter(moviesList.getSearch());
                 setupSlider(moviesList.getSearch());
                 mMainViewModel.addListToDB(moviesList.getSearch());
@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                     if (mMainViewModel.isOnline(this)) {
                         mBanner.setVisibility(View.GONE);
                         mBanner.dismiss();
-                        mMainViewModel.getMoviesList().observe(this, moviesList -> {
+                        mMainViewModel.getMoviesList();
+                        mMainViewModel.getLDMoviesList().observe(this, moviesList -> {
                             setupAdapter(moviesList.getSearch());
                             setupSlider(moviesList.getSearch());
                             mMainViewModel.addListToDB(moviesList.getSearch());
