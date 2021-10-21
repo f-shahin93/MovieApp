@@ -15,27 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.splash.SplashActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.movieList.MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.moviedetail.SecondActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyTheme" />
-        <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyThemeTwo" />
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme">
             <intent-filter>
