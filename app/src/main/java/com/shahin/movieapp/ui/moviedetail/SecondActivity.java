@@ -1,13 +1,10 @@
-package com.shahin.movieapp.view;
+package com.shahin.movieapp.ui.moviedetail;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.shahin.movieapp.R;
 
 public class SecondActivity extends AppCompatActivity {
@@ -22,7 +19,7 @@ public class SecondActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .add(R.id.container_frag, DetailMovieFragment.newInstance(getIntent().getStringExtra(EXTRA_IMDBID)))
+                .add(R.id.container_frag, DetailMovieFragment.Companion.newInstance(getIntent().getStringExtra(EXTRA_IMDBID)))
                 .commit();
 
     }
