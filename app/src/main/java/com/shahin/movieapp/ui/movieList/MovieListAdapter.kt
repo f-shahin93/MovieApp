@@ -1,7 +1,6 @@
 package com.shahin.movieapp.ui.movieList
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shahin.movieapp.R
 import com.shahin.movieapp.databinding.ItemListMainPageBinding
 import com.shahin.movieapp.model.MovieItemList
-import com.shahin.movieapp.ui.moviedetail.SecondActivity
 
 class MovieListAdapter(
     var list: List<MovieItemList>,
     val context: Context,
-): RecyclerView.Adapter<MovieListAdapter.MovieItemViewHolder>() {
+    val listener:ItemClickListener
+) : RecyclerView.Adapter<MovieListAdapter.MovieItemViewHolder>() {
 
     fun setMovieList(list: List<MovieItemList>) {
         this.list = list
@@ -34,27 +33,28 @@ class MovieListAdapter(
         return list.size
     }
 
-    inner class MovieItemViewHolder(binding: ItemListMainPageBinding) :
+    inner class MovieItemViewHolder(val binding: ItemListMainPageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var mMovieItelistVh: MovieItemList? = null
-        var mBinding: ItemListMainPageBinding
-        fun bind(searchItem: MovieItemList) {
-            mMovieItelistVh = searchItem
-            if (searchItem.poster != null) {
+        var itemVH: MovieItemList? = null
+        fun bind(item: MovieItemList) {
+            itemVH = item
+            if (item.poster != null) {
                 /*Picasso.with(context)
                         .load(searchItem.getPoster())
                         .into(mBinding.ivItelistMainPage);*/
             }
-            mBinding.tvNameItemListMainPage.text = searchItem.title
+            binding.tvNameItemListMainPage.text = item.title
         }
 
         init {
-            mBinding = binding
-            mBinding.getRoot().setOnClickListener { view ->
-                val intent = SecondActivity.newIntent(context, mMovieItelistVh!!.imdbID)
-                context.startActivity(intent)
+            binding.root.setOnClickListener {
+                listener.onMovieItemClicked(itemVH!!.imdbID)
             }
         }
     }
-    
+
+    interface ItemClickListener {
+        fun onMovieItemClicked(imdbId: String)
+    }
+
 }
