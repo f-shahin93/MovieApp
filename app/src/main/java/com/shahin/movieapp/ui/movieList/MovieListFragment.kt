@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.daimajia.slider.library.SliderLayout
@@ -14,22 +14,26 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.TextSliderView
 import com.shahin.movieapp.R
 import com.shahin.movieapp.databinding.FragmentMovieListBinding
+import com.shahin.movieapp.di.ViewModelFactory
 import com.shahin.movieapp.model.MovieItemList
 import com.shahin.movieapp.viewModel.MainViewModel
+import javax.inject.Inject
 
 
 class MovieListFragment : Fragment() ,MovieListAdapter.ItemClickListener{
 
     private lateinit var adapter: MovieListAdapter
     private lateinit var binding: FragmentMovieListBinding
-    private lateinit var viewModel: MainViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by viewModels<MainViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list,container,false)
         binding.recyclerViewMainActivity.layoutManager = GridLayoutManager(requireContext(), 2)
         return binding.root

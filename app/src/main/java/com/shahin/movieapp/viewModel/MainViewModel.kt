@@ -4,39 +4,28 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.shahin.movieapp.data.network.ItemFetcher
 import com.shahin.movieapp.data.repository.MovieRepository
-import com.shahin.movieapp.model.Movie
 import com.shahin.movieapp.model.MovieItemList
 import java.lang.NullPointerException
 import java.util.ArrayList
+import javax.inject.Inject
 
-class MainViewModel: ViewModel() {
-    
-    private val itemFetcher = ItemFetcher.getInstance()
-    private var mMovieRepository = MovieRepository.getInstance()
+class MainViewModel @Inject constructor(
+    private val repository: MovieRepository
+) : ViewModel() {
 
-    fun getLDMoviesList(): LiveData<List<MovieItemList>> = itemFetcher.getMoviesList()
+    fun getLDMoviesList(): LiveData<List<MovieItemList>> = repository.getMoviesListRemote()
 
     fun getMoviesList() {
-        itemFetcher.getMoviesList()
-    }
-
-    fun getMovie(imdbId: String): LiveData<Movie?> {
-        itemFetcher.getMovie(imdbId)
-        return itemFetcher.getMovie(imdbId)
+        repository.getMoviesListRemote()
     }
 
     fun addListToDB(list: List<MovieItemList>) {
-        mMovieRepository.addMovieListToDB(list)
-    }
-
-    fun addMovieToDB(movie: Movie) {
-        mMovieRepository.addMovieToDB(movie)
+        repository.addMovieListToDB(list)
     }
 
     fun getMoviesListFromDB(): List<MovieItemList> {
-        val listMovie = mMovieRepository.getListFromDB()
+        val listMovie = repository.getListFromDB()
         if (listMovie.size > 0) {
             val movieItemList: MutableList<MovieItemList> = ArrayList<MovieItemList>()
             for (i in listMovie.indices) {
@@ -54,10 +43,6 @@ class MainViewModel: ViewModel() {
         return ArrayList<MovieItemList>()
     }
 
-    fun getMovieFromDB(imdbId: String): Movie? {
-        return mMovieRepository.getMovieFromDB(imdbId)
-    }
-
     fun isOnline(context: Context): Boolean {
         return try {
             val connectivityManager =
@@ -69,6 +54,5 @@ class MainViewModel: ViewModel() {
             false
         }
     }
-    
-    
+
 }

@@ -6,38 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import com.sergivonavi.materialbanner.Banner
-import com.sergivonavi.materialbanner.BannerInterface
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.shahin.movieapp.R
 import com.shahin.movieapp.databinding.FragmentDetailMovieBinding
+import com.shahin.movieapp.di.ViewModelFactory
 import com.shahin.movieapp.model.Movie
-import com.shahin.movieapp.viewModel.MainViewModel
-
-const val ARG_MOVIE = "ArgMovie"
+import javax.inject.Inject
 
 class DetailMovieFragment : Fragment() {
 
-    
     private lateinit var binding: FragmentDetailMovieBinding
-    private lateinit var viewModel: MainViewModel
-    private var imdbId: String? = null
+
+    @Inject
+    lateinit var viewModelFactory : ViewModelFactory
+    private val viewModel by viewModels<DetailMovieViewModel> { viewModelFactory }
+
     private var flagOffLine = false
+    private val navArgument : DetailMovieFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (arguments != null) {
-            imdbId = arguments?.getString(ARG_MOVIE)
-        }
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        if (viewModel.isOnline(requireContext())) {
+       // if (viewModel.isOnline(requireContext())) {
             sendRequest()
-        } else {
-            flagOffLine = true
-        }
+        //} else {
+          //  flagOffLine = true
+        //}
 
     }
 
@@ -48,14 +43,13 @@ class DetailMovieFragment : Fragment() {
         
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_movie, container, false)
 
-        if (flagOffLine && imdbId != null) {
-            val movieDB: Movie? = viewModel.getMovieFromDB(imdbId!!)
+        if (flagOffLine) {
+            val movieDB: Movie? = viewModel.getMovieFromDB(navArgument.imdbId)
             if (movieDB != null) {
                 if (movieDB.runtime != null && movieDB.runtime != "") {
                     initUI(movieDB)
                 } else {
                     initPic(movieDB)
-                    initBanner()
                 }
             }
         }
@@ -63,32 +57,9 @@ class DetailMovieFragment : Fragment() {
         return binding.root
     }
 
-    private var banner: Banner? = null
-    private fun initBanner() {
-        banner = Banner.Builder(requireContext())
-            .setParent(binding.llBannerDetail)
-            .setIcon(R.drawable.ic_alart)
-            .setMessage("You have lost connection to the Internet. This app is offline.")
-            .setLeftButton("Dismiss") { banner: BannerInterface? -> banner!!.dismiss() }
-            .setRightButton("Turn on wifi") {
-                if (viewModel.isOnline(requireContext())) {
-                    banner?.visibility = View.GONE
-                    banner?.dismiss()
-                    sendRequest()
-                    visibleCompo(true)
-                } else {
-                    banner?.show()
-                    banner?.visibility = View.VISIBLE
-                }
-            }
-            .create()
-        banner?.show()
-        banner?.visibility = View.VISIBLE
-    }
-
     private fun sendRequest() {
-        if (imdbId != null){
-            viewModel.getMovie(imdbId!!).observe(viewLifecycleOwner) { movie ->
+        if (navArgument.imdbId != null){
+            viewModel.getMovie(navArgument.imdbId).observe(viewLifecycleOwner) { movie ->
                 initUI(movie!!)
                 viewModel.addMovieToDB(movie)
             }
@@ -131,17 +102,6 @@ class DetailMovieFragment : Fragment() {
             binding.linearLayoutCompat2.visibility = View.INVISIBLE
             binding.linearLayoutCompat.visibility = View.INVISIBLE
             binding.ivShowFilmDetailMovie.visibility = View.INVISIBLE
-        }
-    }
-
-
-    companion object{
-        fun newInstance(imdbId: String): DetailMovieFragment{
-            val fragment = DetailMovieFragment()
-            val args = Bundle()
-            args.putString(ARG_MOVIE, imdbId)
-            fragment.arguments = args
-            return fragment
         }
     }
 
