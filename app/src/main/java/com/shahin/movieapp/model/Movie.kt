@@ -1,10 +1,9 @@
 package com.shahin.movieapp.model
 
-import com.shahin.movieapp.data.local.model.RatingsItem
-import io.realm.RealmObject
+import androidx.room.*
 import io.realm.annotations.PrimaryKey
 
-
+@Entity(tableName = "movie_detail")
 data class Movie  (
     @PrimaryKey
     var imdbID: String,
@@ -22,6 +21,7 @@ data class Movie  (
     var country: String? = null,
     var awards: String? = null,
     var poster: String,
+    @Embedded
     var ratings: List<RatingsItem>? = null,
     var metaScore: String? = null,
     var imdbRating: String? = null,
@@ -32,12 +32,21 @@ data class Movie  (
     var production: String? = null,
     var website: String? = null,
     var response: String? = null
-): RealmObject()
+)
 
+@Entity(tableName = "movie_item_list")
 data class MovieItemList(
+    @PrimaryKey
     var imdbID: String,
     var title: String,
     var year: String,
     var poster: String,
     var type: String,
-):RealmObject()
+)
+
+data class RatingsItem(
+    @ColumnInfo(name = "Source")
+    val source: String,
+    @ColumnInfo(name ="Value")
+    val value: String,
+)

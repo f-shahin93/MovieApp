@@ -11,7 +11,8 @@ import javax.inject.Singleton
         SubComponentsModule::class,
         AppModule::class,
         NetworkModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        DatabaseModule::class
     ]
 )
 interface ApplicationGraph {

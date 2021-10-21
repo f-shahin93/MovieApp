@@ -34,7 +34,7 @@ data class MovieDto(
     @SerializedName("Poster")
     val poster: String,
     @SerializedName("Ratings")
-    val ratings: List<RatingsItem>?,
+    val ratings: List<RatingsItemDto>?,
     @SerializedName("Metascore")
     val metaScore: String?,
     @SerializedName("imdbRating")
@@ -55,7 +55,7 @@ data class MovieDto(
     val response: String?
 )
 
-data class RatingsItem(
+data class RatingsItemDto(
     @SerializedName("Source")
     val source: String,
     @SerializedName("Value")
