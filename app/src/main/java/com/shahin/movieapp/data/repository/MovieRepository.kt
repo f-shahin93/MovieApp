@@ -1,18 +1,60 @@
 package com.shahin.movieapp.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.shahin.movieapp.data.local.model.MovieDto
+import com.shahin.movieapp.data.network.MovieService
+import com.shahin.movieapp.data.network.model.MoviesListDto
 import com.shahin.movieapp.model.Movie
 import com.shahin.movieapp.model.MovieItemList
 import io.realm.Realm
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import javax.inject.Inject
 
-class MovieRepository {
-
+class MovieRepository @Inject constructor(
+    private val movieService: MovieService,
+) {
     private var realm: Realm = Realm.getDefaultInstance()
 
-    companion object {
-        private val repository: MovieRepository by lazy { MovieRepository() }
-        fun getInstance(): MovieRepository {
-            return repository
-        }
+    fun getMoviesListRemote(): LiveData<List<MovieItemList>> {
+        val queryParam = mapOf("s" to "batman")
+        val moviesList = MutableLiveData<List<MovieItemList>>()
+        movieService.getMoviesList(queryParam).enqueue(object : Callback<MoviesListDto> {
+            override fun onResponse(call: Call<MoviesListDto>, response: Response<MoviesListDto>) {
+                if (response.isSuccessful) {
+                    moviesList.postValue(response.body()?.toDomain() ?: emptyList())
+                }
+            }
+
+            override fun onFailure(call: Call<MoviesListDto>, t: Throwable) {
+
+            }
+
+        })
+        return moviesList
+    }
+
+    fun getMovieRemote(imdbID: String): LiveData<Movie?> {
+        val queryParam = mapOf("i" to imdbID)
+
+        val movie = MutableLiveData<Movie?>()
+        movieService.getMovie(queryParam).enqueue(object : Callback<MovieDto> {
+
+            override fun onResponse(call: Call<MovieDto>, response: Response<MovieDto>) {
+                if (response.isSuccessful) {
+                    movie.postValue(response.body()?.toDomain())
+                }
+            }
+
+            override fun onFailure(call: Call<MovieDto>, t: Throwable) {
+
+            }
+        })
+
+        return movie
+
     }
 
     fun addMovieListToDB(list: List<MovieItemList>) {

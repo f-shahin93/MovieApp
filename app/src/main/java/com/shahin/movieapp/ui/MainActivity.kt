@@ -1,4 +1,4 @@
-package com.shahin.movieapp.ui.movieList
+package com.shahin.movieapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
