@@ -14,7 +14,7 @@ class DatabaseModule {
     @Singleton
     fun provideMovieDatabase(context: Context): MovieDatabase =
         Room.databaseBuilder(
-            context,
+            context.applicationContext,
             MovieDatabase::class.java,
             "movie_db"
         ).build()

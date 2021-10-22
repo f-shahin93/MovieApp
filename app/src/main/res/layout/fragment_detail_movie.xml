@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="movie"-->
-<!--            type="com.shahin.movieapp.viewModel.MainViewModel" />-->
-<!--    </data>-->
+    <data>
+        <variable
+            name="movie"
+            type="com.shahin.movieapp.model.Movie" />
+    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".view.DetailMovieFragment"
             android:id="@+id/constraintL_detail_root">
 

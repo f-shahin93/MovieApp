@@ -2,23 +2,21 @@ package com.shahin.movieapp.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.shahin.movieapp.model.Movie
-import com.shahin.movieapp.model.MovieItemList
 
 @Dao
 interface MovieDao {
 
-    @Insert
-    fun insert(movie: Movie)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(movie: MovieEntity)
 
-    @Insert
-    fun insert(list: List<MovieItemList>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(list: List<MovieItemListEntity>)
 
-    @Query("SELECT * FROM movie_detail WHERE imdbID = :id")
-    fun getMovie(id: String): LiveData<Movie?>
+    @Query("SELECT * FROM movie_detail WHERE imdb_id = :imdbId")
+    fun getMovie(imdbId: String): LiveData<MovieEntity?>
 
     @Query("SELECT * FROM movie_item_list")
-    fun getMovieList(): LiveData<List<MovieItemList>?>
+    fun getMovieList(): LiveData<List<MovieItemListEntity>>
 
 
 }

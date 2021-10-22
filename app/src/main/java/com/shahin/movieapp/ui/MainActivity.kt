@@ -7,7 +7,9 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.sergivonavi.materialbanner.Banner
 import com.shahin.movieapp.R
+import com.shahin.movieapp.app.MovieApplication
 import com.shahin.movieapp.databinding.ActivityMainBinding
+import com.shahin.movieapp.di.MainActivitySubComponent
 import com.shahin.movieapp.di.ViewModelFactory
 import com.shahin.movieapp.viewModel.MainViewModel
 import javax.inject.Inject
@@ -15,12 +17,16 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    lateinit var mainActivitySubComponent: MainActivitySubComponent
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel by viewModels<MainViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        mainActivitySubComponent =
+            (applicationContext as MovieApplication).applicationGraph.mainComponent().create()
+
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)

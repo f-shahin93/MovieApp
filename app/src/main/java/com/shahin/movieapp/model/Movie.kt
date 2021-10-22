@@ -1,52 +1,42 @@
 package com.shahin.movieapp.model
 
-import androidx.room.*
-import io.realm.annotations.PrimaryKey
-
-@Entity(tableName = "movie_detail")
-data class Movie  (
-    @PrimaryKey
-    var imdbID: String,
-    var title: String,
-    var year: String,
-    var rated: String? = null,
-    var released: String? = null,
-    var runtime: String? = null,
-    var genre: String? = null,
-    var director: String? = null,
-    var writer: String? = null,
-    var actors: String? = null,
-    var plot: String? = null,
-    var language: String? = null,
-    var country: String? = null,
-    var awards: String? = null,
-    var poster: String,
-    @Embedded
-    var ratings: List<RatingsItem>? = null,
-    var metaScore: String? = null,
-    var imdbRating: String? = null,
-    var imdbVotes: String? = null,
-    var type: String,
-    var dVD: String? = null,
-    var boxOffice: String? = null,
-    var production: String? = null,
-    var website: String? = null,
-    var response: String? = null
+data class Movie(
+    val imdbID: String,
+    val title: String,
+    val year: String,
+    val rated: String,
+    val released: String,
+    val runtime: String,
+    val genre: String,
+    val director: String,
+    val writer: String,
+    val actors: String,
+    val plot: String,
+    val language: String,
+    val country: String,
+    val awards: String,
+    val poster: String,
+    //val ratings: List<RatingsItem>,
+    val metaScore: String,
+    val imdbRating: String,
+    val imdbVotes: String,
+    val type_Movie: String,
+    val dVD: String,
+    val boxOffice: String,
+    val production: String,
+    val website: String,
+    val response: String
 )
 
-@Entity(tableName = "movie_item_list")
 data class MovieItemList(
-    @PrimaryKey
-    var imdbID: String,
-    var title: String,
-    var year: String,
-    var poster: String,
-    var type: String,
+    val imdbID: String,
+    val title: String,
+    val year: String,
+    val poster: String,
+    val type: String,
 )
 
 data class RatingsItem(
-    @ColumnInfo(name = "Source")
     val source: String,
-    @ColumnInfo(name ="Value")
     val value: String,
 )
